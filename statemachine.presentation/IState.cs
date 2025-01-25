@@ -2,9 +2,9 @@ namespace statemachine.presentation;
 
 public interface IState
 {
-    public IState NextState { get; set; }
+    public Type NextState { get; set; }
 
-    public IEnumerable<IState> NextStatesAllowed { get; set; }
+    public IEnumerable<Type> NextStatesAllowed { get; set; }
 
-    (IState nextState, object outputContext) Execute(object inputContext);
+    (Type nextState, object outputContext) Execute(object inputContext);
 }
