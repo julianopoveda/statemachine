@@ -5,8 +5,10 @@ using statemachine.presentation;
 using statemachine.presentation.States;
 
 var serviceProvider = new ServiceCollection();
+serviceProvider.AddHttpClient<IgpmState>();
+serviceProvider.AddScoped<IgpmState>();
 serviceProvider.AddScoped<FailState>();
-serviceProvider.AddSingleton<StateMachine>(f=> new StateMachine(f.GetService<FailState>(), f));
+serviceProvider.AddSingleton<StateMachine>(f=> new StateMachine(f.GetService<IgpmState>(), f));
 var service = serviceProvider.BuildServiceProvider();
 
 var stateMachine = service.GetService<StateMachine>();
