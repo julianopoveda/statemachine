@@ -85,6 +85,14 @@ public class IgpmState : IState
     /// <exception cref="NotImplementedException"></exception>
     private bool IgpmIndexIsUpdated()
     {
-        return false; //throw new NotImplementedException();
+        connection.Open();
+        var checkIGPM = connection.CreateCommand();
+        checkIGPM.CommandText = "select 1 from igpm_dados where indiceDate=@currentDate";
+        checkIGPM.Parameters.Add(new SqliteParameter("@currentDate", DateTime.Today.AddDays(-DateTime.Today.Day + 1)));
+
+        var result= checkIGPM.ExecuteScalar();
+        
+        connection.Close();
+        return result != null;
     }
 }
