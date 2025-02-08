@@ -63,7 +63,9 @@ public class IgpmState : IState
         connection.Open();
         var insertIgpmIndex = connection.CreateCommand();
 
-        insertIgpmIndex.CommandText = "insert into igpm_dados values (@indiceData,@indice)";
+        insertIgpmIndex.CommandText = 
+            "insert into igpm_dados values (@indiceData,@indice)" +
+            "on conflict (@indiceData) do nothing";
 
         foreach (var (data, indice) in igpm)
         {
