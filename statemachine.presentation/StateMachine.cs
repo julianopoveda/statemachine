@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using statemachine.presentation.DTO;
 
 namespace statemachine.presentation;
 
@@ -17,12 +18,12 @@ public class StateMachine
     public void Start()
     {
         object context = null;
-        Type nextState;
+        Type nextState = default;
 
         while (CurrentState != null)
         {
             (nextState, context) = CurrentState.Execute(context);
-            CurrentState = (IState)Services.GetService(nextState);
+            CurrentState = nextState != null ? Services.GetService(nextState) as IState : null;
         }
     }
 }
