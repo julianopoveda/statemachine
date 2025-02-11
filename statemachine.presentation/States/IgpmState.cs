@@ -40,7 +40,19 @@ public class IgpmState : IState
 
     private IEnumerable<IGPMIndex> GetIgpmIndex()
     {
-        throw new NotImplementedException();
+        connection.Open();
+        var igpmData = connection.CreateCommand();
+
+        igpmData.CommandText = "select indiceDate, indice from igpm_dados";
+        var reader = igpmData.ExecuteReader();
+
+        List<IGPMIndex> igpmIndexes = new List<IGPMIndex>();
+        while (reader.Read())
+        {
+            igpmIndexes.Add(new IGPMIndex(reader.GetString(0), reader.GetDecimal(1)));
+        }
+
+        return igpmIndexes;
     }
 
     private async Task<IEnumerable<IGPMIndex>> GetIgpmIndexUpdated()
