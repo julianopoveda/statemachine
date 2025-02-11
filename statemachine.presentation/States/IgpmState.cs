@@ -65,7 +65,7 @@ public class IgpmState : IState
 
         insertIgpmIndex.CommandText = 
             "insert into igpm_dados values (@indiceData,@indice)" +
-            "on conflict (@indiceData) do nothing";
+            "on conflict (indiceDate) do nothing";
 
         foreach (var (data, indice) in igpm)
         {
