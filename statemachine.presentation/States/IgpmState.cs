@@ -88,7 +88,7 @@ public class IgpmState : IState
         connection.Open();
         var checkIGPM = connection.CreateCommand();
         checkIGPM.CommandText = "select 1 from igpm_dados where indiceDate=@currentDate";
-        checkIGPM.Parameters.Add(new SqliteParameter("@currentDate", DateTime.Today.AddDays(-DateTime.Today.Day + 1)));
+        checkIGPM.Parameters.Add(new SqliteParameter("@currentDate", new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-2).ToString("dd/MM/yyyy")));
 
         var result= checkIGPM.ExecuteScalar();
         
